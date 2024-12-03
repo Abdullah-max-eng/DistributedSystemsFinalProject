@@ -12,9 +12,14 @@ public class automatedTest {
     public void runTest() {
         System.out.println("=== Automated Test Started ===");
 
-        long fifoTime = 0, causalTime = 0, totalTime = 0;
+        long fifoTime = 0;
+        long causalTime = 0;
+        long  totalTime = 0;
 
-        // Test FIFO Delivery Mechanism
+
+
+
+
         System.out.println("Testing FIFO Delivery Mechanism...");
         for (Node node : nodes) {
             node.setDeliveryMechanism(new FifoMessageDelivery());
@@ -22,7 +27,16 @@ public class automatedTest {
         fifoTime = measureExecutionTime();
         System.out.println("FIFO Delivery took: " + fifoTime + " ms for 2000 messages.");
 
-        // Test Causal Delivery Mechanism
+
+
+
+
+
+
+
+
+
+      
         System.out.println("Testing Causal Delivery Mechanism...");
         for (Node node : nodes) {
             node.setDeliveryMechanism(new CausalMessageDelivery(node.getNodeId(), nodes.length));
@@ -30,13 +44,31 @@ public class automatedTest {
         causalTime = measureExecutionTime();
         System.out.println("Causal Delivery took: " + causalTime + " ms for 2000 messages.");
 
+
+
+
+
+
+
+
         // Test Total Delivery Mechanism
         System.out.println("Testing Total Delivery Mechanism...");
         for (Node node : nodes) {
             node.setDeliveryMechanism(new TotalMessageDelivery());
         }
         totalTime = measureExecutionTime();
-        System.out.println("Total Delivery took: " + totalTime + " ms for 2000 messages.");
+        System.out.println("Total Delivery took: " + totalTime + " ms for  messages.");
+
+
+
+
+
+
+
+
+
+
+
 
         // Print all results
         System.out.println("\n=== Summary of Results ===");
@@ -46,18 +78,24 @@ public class automatedTest {
         System.out.println("=== Automated Test Completed ===");
     }
 
+
+
+
+
+
+
     private long measureExecutionTime() {
         Random random = new Random();
         long startTime = System.nanoTime();
 
-        // Generate and send 2000 random messages
-        for (int i = 0; i < 2000; i++) {
-            int senderId = random.nextInt(5) + 1;  // Random sender (1 to 5)
-            int receiverId = random.nextInt(5) + 1; // Random receiver (1 to 5)
+        int NumberOfMessages = 10;
+        for (int i = 0; i < NumberOfMessages; i++) {
+            int senderId = random.nextInt(100) + 1;  
+            int receiverId = random.nextInt(100) + 1; 
 
             // Ensure sender and receiver are not the same
             while (senderId == receiverId) {
-                receiverId = random.nextInt(5) + 1;
+                receiverId = random.nextInt(100) + 1;
             }
 
             String content = "Message " + i + " from Node " + senderId + " to Node " + receiverId;
@@ -77,6 +115,6 @@ public class automatedTest {
         }
 
         long endTime = System.nanoTime();
-        return (endTime - startTime) / 1_000_000; // Convert to milliseconds
+        return (endTime - startTime) / 1_000_000; //  milliseconds
     }
 }

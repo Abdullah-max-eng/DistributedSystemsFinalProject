@@ -7,11 +7,20 @@ public class CausalMessageDelivery implements MessageDelivery {
     private final int[] vectorClock;
     private final Map<Integer, Message> buffer;
 
+
+
+
+
     public CausalMessageDelivery(int nodeId, int totalNodes) {
         this.nodeId = nodeId;
         this.vectorClock = new int[totalNodes];
         this.buffer = new HashMap<>();
     }
+
+
+
+
+
 
     @Override
     public void send(int destPort, Message message) {
@@ -20,6 +29,10 @@ public class CausalMessageDelivery implements MessageDelivery {
         System.out.println("Causal: Sending message with vector clock: " + Arrays.toString(vectorClock));
         Node.send(destPort, msg);
     }
+
+
+
+
 
     @Override
     public void receive(Message message) {
@@ -30,6 +43,9 @@ public class CausalMessageDelivery implements MessageDelivery {
 
         System.out.println("Causal: Received message with vector clock: " + Arrays.toString(message.getVectorClock()));
 
+
+
+
         int[] messageClock = message.getVectorClock();
         if (canDeliver(messageClock, message.getSenderId())) {
             deliver(message);
@@ -38,6 +54,9 @@ public class CausalMessageDelivery implements MessageDelivery {
             buffer.put(message.getSenderId(), message);
             System.out.println("Causal: Message buffered - causal dependency not satisfied: " + message);
         }
+
+
+
 
         buffer.values().removeIf(msg -> {
             if (canDeliver(msg.getVectorClock(), msg.getSenderId())) {
@@ -50,10 +69,15 @@ public class CausalMessageDelivery implements MessageDelivery {
     }
 
 
+
+
     public int[] getVectorClock() {
         return Arrays.copyOf(vectorClock, vectorClock.length);
     }
     
+
+
+
 
     private boolean canDeliver(int[] messageClock, int senderId) {
         for (int i = 0; i < vectorClock.length; i++) {
@@ -64,6 +88,11 @@ public class CausalMessageDelivery implements MessageDelivery {
         return messageClock[senderId - 1] == vectorClock[senderId - 1] + 1;
     }
 
+
+
+
+
+    
     private void deliver(Message message) {
         try {
             Thread.sleep(25); // Simulate 25ms latency

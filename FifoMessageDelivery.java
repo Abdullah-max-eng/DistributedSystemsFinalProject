@@ -6,16 +6,28 @@ public class FifoMessageDelivery implements MessageDelivery {
     private final Map<Integer, Integer> expectedSeq;
     private final Map<Integer, PriorityQueue<Message>> buffers;
 
+
+
+
+
     public FifoMessageDelivery() {
-        this.expectedSeq = new HashMap<>();
+        this.expectedSeq = new HashMap<>(); /// the order that should be deliverd 
         this.buffers = new HashMap<>();
     }
+
+
+
+
 
     @Override
     public void send(int destPort, Message message) {
         System.out.println("FIFO: Sending message to Node " + destPort + " - " + message);
         Node.send(destPort, message);
     }
+
+
+
+
 
     @Override
     public void receive(Message message) {
@@ -39,6 +51,13 @@ public class FifoMessageDelivery implements MessageDelivery {
         }
     }
 
+
+
+
+
+
+
+    
     private void deliver(Message message) {
         try {
             Thread.sleep(15); // Simulate 15ms latency

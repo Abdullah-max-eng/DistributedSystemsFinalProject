@@ -14,22 +14,41 @@ public class Message implements Serializable {
         this.vectorClock = vectorClock;
     }
 
+
+
+
+
     public int getSenderId() {
         return senderId;
     }
+
+
+
 
     public String getContent() {
         return content;
     }
 
+
+
+
     public int getSeqNum() {
         return seqNum;
     }
+
+
+
+
 
     public int[] getVectorClock() {
         return vectorClock;
     }
 
+
+
+
+
+    
     @Override
     public String toString() {
         return "Message{" +

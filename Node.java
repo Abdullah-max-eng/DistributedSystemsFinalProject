@@ -10,12 +10,18 @@ public class Node implements Runnable {
     private MessageDelivery deliveryMechanism;
     private volatile boolean running = true;
 
+
+
+
+
     public Node(int nodeId, int port, MessageDelivery deliveryMechanism) {
         this.nodeId = nodeId;
         this.port = port;
         this.incomingMessages = new LinkedBlockingQueue<>();
         this.deliveryMechanism = deliveryMechanism;
     }
+
+
 
     public int getNodeId() {
         return nodeId;
@@ -43,6 +49,8 @@ public class Node implements Runnable {
 
 
     
+
+
     public void startServer() {
         new Thread(() -> {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -61,6 +69,11 @@ public class Node implements Runnable {
         }).start();
     }
 
+
+
+
+
+
     public void processMessages() {
         new Thread(() -> {
             while (running) {
@@ -78,10 +91,20 @@ public class Node implements Runnable {
         }).start();
     }
 
+
+
+
+
+
     public void shutdown() {
         running = false;
     }
 
+
+
+
+
+    
     @Override
     public void run() {
         startServer();

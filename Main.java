@@ -4,11 +4,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        
         Scanner scanner = new Scanner(System.in);
 
-        int basePort = 300;
-        Node[] nodes = new Node[5];
-        for (int i = 0; i < 5; i++) {
+
+
+
+        // Start the nodes and assign ports to the nodes
+        int basePort = 10000;
+        Node[] nodes = new Node[100];
+        for (int i = 0; i < nodes.length; i++) {
             nodes[i] = new Node(i + 1, basePort + i + 1, null);
             new Thread(nodes[i]).start();
         }
@@ -73,11 +78,7 @@ public class Main {
 
                     messageQueue.add(new Message(senderId, content, 0, null));
                     System.out.println("Message added to queue: " + content);
-                    break;
-
-
-
-                    
+                    break;                    
                 case 3:
                     if (messageQueue.isEmpty()) {
                         System.out.println("No messages in the queue to send.");

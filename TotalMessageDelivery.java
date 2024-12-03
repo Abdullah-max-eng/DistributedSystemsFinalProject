@@ -1,12 +1,26 @@
 import java.util.PriorityQueue;
 
 public class TotalMessageDelivery implements MessageDelivery {
+   
+   
+   
     private final PriorityQueue<Message> deliveryQueue;
     private int lastDeliveredSeqNum = 0;
 
+
+
+
+
+
     public TotalMessageDelivery() {
-        this.deliveryQueue = new PriorityQueue<>((a, b) -> a.getSeqNum() - b.getSeqNum());
+        this.deliveryQueue = new PriorityQueue<>((a, b) -> a.getSeqNum() - b.getSeqNum())
+        // System.err.println(this.deliveryQueue);;
     }
+
+
+
+
+
 
     @Override
     public void send(int destPort, Message message) {
@@ -15,6 +29,10 @@ public class TotalMessageDelivery implements MessageDelivery {
         System.out.println("Total: Sending message with sequence number: " + seqNum);
         Node.send(destPort, msg);
     }
+
+
+
+// Receive message from the other node by passing the mesage object
 
     @Override
     public void receive(Message message) {
@@ -27,6 +45,12 @@ public class TotalMessageDelivery implements MessageDelivery {
             lastDeliveredSeqNum = toDeliver.getSeqNum();
         }
     }
+
+
+
+
+
+
 
     private void deliver(Message message) {
         try {
